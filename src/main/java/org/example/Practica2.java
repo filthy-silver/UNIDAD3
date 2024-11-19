@@ -64,44 +64,34 @@ public class Practica2 {
             boolean hayReintegro = false;               //Variables de control para reintegro y complementario
             boolean hayComplementario = false;
 
-//            System.out.println("\nDEBUG: SORTEO");
-//            System.out.println("DEBUG: BOLETO → " + Arrays.toString(boleto) + " || SORTEO → " + Arrays.toString(sorteo));
             for (int i = 0; i < boleto.length-1; i++) {
                 if (Arrays.asList(sorteo).contains(boleto[i])) {
-//                    System.out.println("DEBUG: " + boleto[i] + " " + sorteo[i]);
-                    aciertos++; //Si el número del boleto está en el sorteo, se incrementa el contador de aciertos
-//                    System.out.println("DEBUG: hit " + aciertos);
-                } else {
-//                    System.out.println("DEBUG: miss " + boleto[i]);
+                    aciertos++;         //Si el número del boleto está en el sorteo, se incrementa el contador de aciertos
                 }
             }
 
-//            System.out.println("\nDEBUG: COMPLEMENTARIO");
             for (int i = 0; i < boleto.length-1; i++) {
-//                System.out.println("DEBUG: " + boleto[i] + " " + complementario);
                 if (boleto[i] == complementario) {
                     hayComplementario = true;
-                    break;
+                    break;      //Si el número del boleto es igual al complementario, se activa la variable de control y se sale del bucle
                 }
             }
 
-//            System.out.println("\nDEBUG: REINTEGRO");
             for (int i = 0; i < boleto.length-1; i++) {
-//                System.out.println("DEBUG: " + boleto[i] + " " + reintegro);
                 if (boleto[i] == reintegro) {
-                    hayReintegro = true;
+                    hayReintegro = true;        //Si el número del boleto es igual al reintegro, se activa la variable de control y se sale del bucle
                     break;
                 }
             }
 
             System.out.println("RESULTADOS:" +
-                    "\nAciertos: " + aciertos);
+                    "\nAciertos: " + aciertos);         //Se muestra el número de aciertos
 
             if (hayReintegro) {
                 System.out.println("Reintegro.");
             }
             if (hayComplementario) {
-                System.out.println("Complementario.");
+                System.out.println("Complementario.");  //Si hay complementario o reintegro se indica al usuario
             }
             act++;
         }while (act < rep);
@@ -110,28 +100,28 @@ public class Practica2 {
     private static boolean validadarBoleto(String arg) {
 
         boolean check = true;
-        String [] aux;
-        int [] boletoAux = new int[7];
+        String [] aux;                  //Array auxiliar para almacenar los valores del boleto
+        int [] boletoAux = new int[7];  //Array auxiliar para almacenar los valores del boleto
 
         arg = arg.trim();
 
-        if (arg.matches("\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}/\\d"))
+        if (arg.matches("\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}/\\d"))       //Expresión regular para validar el formato del boleto
         {
             aux = arg.split("[-/]");
 
             for (int i = 0; i < aux.length; i++) {
-                boletoAux[i] = Integer.parseInt(aux[i]);
+                boletoAux[i] = Integer.parseInt(aux[i]); //Se convierten los valores del boleto a malditos Integers
             }
 
             for (int i = 0; i < boletoAux.length; i++) {
                 if (i != boletoAux.length-1) {
-                    if (boletoAux[i] < 1 || boletoAux[i] > 49) {
+                    if (boletoAux[i] < 1 || boletoAux[i] > 49) { //Se comprueba que los valores del boleto estén en el rango correcto
                         check = false;
                         System.out.println("Error: [0a]");
                         break;
                     }
                 } else {
-                    if (boletoAux[i] < 0 || boletoAux[i] > 10) {
+                    if (boletoAux[i] < 0 || boletoAux[i] > 10) { //Se comprueba que el valor del reintegro esté en el rango correcto
                         check = false;
                         System.out.println("Error: [1a]");
                         break;
@@ -139,47 +129,47 @@ public class Practica2 {
                 }
             }
 
-        } else {
+        } else {        //Si el formato del boleto no es correcto, se activa la variable de control
             return false;
         }
-        if (check) {
+        if (check) {    //Si el boleto es correcto, se asigna a la variable boleto y se devuelve true
             boleto = boletoAux;
             return true;
-        } else {
+        } else {        //Si el boleto no es correcto, se muestra un mensaje de error y se devuelve false
             System.out.println("Error: valores incorrectos [1]");
             return false;
         }
     }
-    private static Integer[] sorteo() {
-        Integer [] sorteo = new Integer[6];
-        for (int i = 0; i < sorteo.length; i++) {
-            Integer aux = bombo();
-            while (Arrays.asList(sorteo).contains(aux)) {
-                aux = bombo();
+    private static Integer[] sorteo() {                     //Función para generar el sorteo
+        Integer [] sorteo = new Integer[6];                 //Array para almacenar los valores del sorteo
+        for (int i = 0; i < sorteo.length; i++) {           //Bucle para generar los valores del sorteo
+            Integer aux = bombo();                          //Variable auxiliar para almacenar los valores que vayamos sacando
+            while (Arrays.asList(sorteo).contains(aux)) {   //Bucle para comprobar que no se repitan los valores
+                aux = bombo();                              //Si se repite, se vuelve a sacar un valor
             }
-                sorteo[i] = aux;
+                sorteo[i] = aux;                            //Si no se repite, se añade al array
         }
         System.out.println("Sorteo: " + Arrays.toString(sorteo));
-        return sorteo;
+        return sorteo;                                      //Se devuelve el array con los valores del sorteo
     }
     private static int sorteoComplementario(Integer[] arg) {
 
-        int complementario;
+        int complementario;     //Variable para almacenar el complementario
 
         do {
             complementario = bombo();
 
-        } while (Arrays.asList(arg).contains(complementario));
+        } while (Arrays.asList(arg).contains(complementario));  //Bucle para comprobar que el complementario no esté en el sorteo
 
         return complementario;
     }
 
     private static Integer reintegro() {
-        return reintegro[rdn.nextInt(reintegro.length)];
+        return reintegro[rdn.nextInt(reintegro.length)]; //Función para generar el reintegro de forma dinámica según el tamaño del array de reintegro
     }
 
     private static Integer bombo() {
-        return bombo[rdn.nextInt(bombo.length)];
+        return bombo[rdn.nextInt(bombo.length)];        //Función para generar un valor del bombo de forma dinámica según el tamaño del array de bombo
     }
 }
 
