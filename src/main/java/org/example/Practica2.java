@@ -140,6 +140,7 @@ public class Practica2 {
             return false;
         }
     }
+
     private static Integer[] sorteo() {                     //Función para generar el sorteo
         Integer [] sorteo = new Integer[6];                 //Array para almacenar los valores del sorteo
         for (int i = 0; i < sorteo.length; i++) {           //Bucle para generar los valores del sorteo
@@ -152,6 +153,7 @@ public class Practica2 {
         System.out.println("Sorteo: " + Arrays.toString(sorteo));
         return sorteo;                                      //Se devuelve el array con los valores del sorteo
     }
+
     private static int sorteoComplementario(Integer[] arg) {
 
         int complementario;     //Variable para almacenar el complementario
