@@ -45,7 +45,7 @@ public class Practica2 {
 
     } while (check);
 
-    laLoteria(6); //Llamada a la función laLoteria con 6 repeticiones
+    laLoteria(1); //Llamada a la función laLoteria con 6 repeticiones
     }
 
     private static void laLoteria(int rep){
